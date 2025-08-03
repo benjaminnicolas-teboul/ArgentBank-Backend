@@ -115,11 +115,41 @@ paths:
         '200':
           description: Transactions retrieved sucessfully
           schema:
-            $ref: '#/definitions/Transaction'
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Fields
         '500':
-          description: Internal Server Error           
+          description: Internal Server Error 
+  /user/transaction/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get single transaction
+      description: Retrieve a single transaction by its ID
+      produces:
+        - application/json
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          type: string
+          description: ID of the transaction to retrieve
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid transaction ID
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+                  
 securityDefinitions:
   Bearer:
     type: apiKey
