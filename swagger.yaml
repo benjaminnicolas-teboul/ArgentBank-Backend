@@ -101,6 +101,25 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/transaction:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Transaction
+      description: api to visualise transactions from current month
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transactions retrieved sucessfully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error           
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -156,20 +175,26 @@ definitions:
     properties:
       userName:
         type: string
-  /user/transaction:
-    get:
-      tags:
-        -Transaction Module
-      summary: Transaction
-      description: api to visualise transactions from current month
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Transactions retrieved sucessfully
-          schema:
-            $ref: '#/definitions/TransactionResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
+  Transaction:
+    type: object
+    properties:
+      date:
+        type: string
+      description:
+        type: object
+        properties:
+          transactionType:
+            type: string
+            description: Type of the transaction
+          category:
+            type: string
+            description: Category of the transaction
+          note:
+            type: string
+            description: user notes
+      id:
+        type: string
+      amount:
+        type: number
+      
+    
