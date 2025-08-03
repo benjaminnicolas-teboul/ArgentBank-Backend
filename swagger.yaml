@@ -122,6 +122,75 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error 
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Modify transaction info
+      description: API to modify information fields of an existing transaction (transactioninfos:transactionTyp , category, note).
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Object containing the transactionId and updated transactioninfos fields
+          required: true
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: string
+                description: ID of the transaction to update
+                example: '609e125b12345abcde67890f'
+              transactioninfos:
+                type: object
+                description: Fields to update inside the transaction
+                properties:
+                  transactionType:
+                    type: string
+                    example: debit
+                  category:
+                    type: string
+                    example: food
+                  note:
+                    type: string
+                    example: lunch at restaurant
+            required:
+              - transactionId
+              - transactioninfos
+      responses:
+        '200':
+          description: Transaction modified successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 0
+              message:
+                type: string
+                example: Transaction modified successfully
+              body:
+                type: object
+                properties:
+                  transactioninfos:
+                    type: object
+                    properties:
+                      transactionType:
+                        type: string
+                      category:
+                        type: string
+                      note:
+                        type: string
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Servor Error
+        '500':
+          description: Internal Server Error
   /user/transaction/{transactionId}:
     get:
       security:
